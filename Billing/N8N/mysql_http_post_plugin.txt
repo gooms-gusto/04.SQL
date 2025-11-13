@@ -1,0 +1,159 @@
+/*
+ * MySQL HTTP POST Plugin
+ * This plugin provides a UDF (User Defined Function) for making HTTP POST requests
+ * from within MySQL queries, stored procedures, and triggers.
+ * 
+ * Compile with:
+ * g++ -shared -fPIC -o http_post.so http_post.cpp -I/usr/include/mysql -lcurl
+ * 
+ * Install in MySQL:
+ * CREATE FUNCTION http_post RETURNS STRING SONAME 'http_post.so';
+ * 
+ * Usage:
+ * SELECT http_post('https://webhook.site/your-url', '{"key": "value"}', 'Content-Type: application/json');
+ */
+
+#include <mysql.h>
+#include <string.h>
+#include <curl/curl.h>
+#include <sstream>
+#include <vector>
+
+// Handle MySQL version differences
+#if defined(MARIADB_VERSION_ID) || MYSQL_VERSION_ID >= 80001
+typedef bool my_bool;
+#endif
+
+extern "C" {
+
+// Function declarations
+my_bool http_post_init(UDF_INIT *initid, UDF_ARGS *args, char *message);
+void http_post_deinit(UDF_INIT *initid);
+char *http_post(UDF_INIT *initid, UDF_ARGS *args, char *result, 
+                unsigned long *length, char *is_null, char *error);
+
+// Callback function for curl to capture response
+size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+    size_t total_size = size * nmemb;
+    std::string *response = static_cast<std::string*>(userp);
+    response->append(static_cast<char*>(contents), total_size);
+    return total_size;
+}
+
+// Initialize function
+my_bool http_post_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
+    // Check argument count (url, data, headers[optional])
+    if (args->arg_count < 2 || args->arg_count > 3) {
+        strcpy(message, "http_post() requires 2 or 3 arguments: URL, data, [headers]");
+        return 1;
+    }
+    
+    // Check argument types
+    if (args->arg_type[0] != STRING_RESULT || args->arg_type[1] != STRING_RESULT) {
+        strcpy(message, "http_post() requires string arguments");
+        return 1;
+    }
+    
+    if (args->arg_count == 3 && args->arg_type[2] != STRING_RESULT) {
+        strcpy(message, "http_post() third argument (headers) must be a string");
+        return 1;
+    }
+    
+    // Allocate memory for result
+    initid->max_length = 65535; // 64KB max response
+    initid->ptr = (char*)malloc(initid->max_length);
+    if (!initid->ptr) {
+        strcpy(message, "Failed to allocate memory");
+        return 1;
+    }
+    
+    return 0;
+}
+
+// Cleanup function
+void http_post_deinit(UDF_INIT *initid) {
+    if (initid->ptr) {
+        free(initid->ptr);
+    }
+}
+
+// Main function
+char *http_post(UDF_INIT *initid, UDF_ARGS *args, char *result, 
+                unsigned long *length, char *is_null, char *error) {
+    
+    CURL *curl;
+    CURLcode res;
+    std::string response;
+    struct curl_slist *headers = NULL;
+    
+    // Get arguments
+    const char *url = args->args[0];
+    const char *data = args->args[1];
+    
+    if (!url || !data) {
+        *error = 1;
+        return NULL;
+    }
+    
+    // Initialize curl
+    curl = curl_easy_init();
+    if (!curl) {
+        *error = 1;
+        return NULL;
+    }
+    
+    // Set URL
+    curl_easy_setopt(curl, CURLOPT_URL, url);
+    
+    // Set POST data
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+    
+    // Set headers if provided
+    if (args->arg_count == 3 && args->args[2]) {
+        std::string header_str(args->args[2]);
+        std::istringstream iss(header_str);
+        std::string header_line;
+        
+        while (std::getline(iss, header_line, ';')) {
+            if (!header_line.empty()) {
+                headers = curl_slist_append(headers, header_line.c_str());
+            }
+        }
+        
+        if (headers) {
+            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        }
+    }
+    
+    // Set callback for response
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+    
+    // Set timeout
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 30L);
+    
+    // Perform request
+    res = curl_easy_perform(curl);
+    
+    // Clean up
+    if (headers) {
+        curl_slist_free_all(headers);
+    }
+    curl_easy_cleanup(curl);
+    
+    // Handle result
+    if (res != CURLE_OK) {
+        std::string error_msg = "CURL error: ";
+        error_msg += curl_easy_strerror(res);
+        strncpy(initid->ptr, error_msg.c_str(), initid->max_length - 1);
+        initid->ptr[initid->max_length - 1] = '\0';
+    } else {
+        strncpy(initid->ptr, response.c_str(), initid->max_length - 1);
+        initid->ptr[initid->max_length - 1] = '\0';
+    }
+    
+    *length = strlen(initid->ptr);
+    return initid->ptr;
+}
+
+} // extern "C"

@@ -1,0 +1,24 @@
+﻿USE wms_cml;
+
+DROP TRIGGER IF EXISTS BEFORE_INSERT_BILLINGSUMMARY;
+
+DELIMITER $$
+
+CREATE
+DEFINER = 'root'@'localhost'
+TRIGGER BEFORE_INSERT_BILLINGSUMMARY
+AFTER INSERT
+ON BIL_SUMMARY
+FOR EACH ROW
+BEGIN
+
+  IF (NEW.ediErrorCode2 <> '') THEN
+    INSERT INTO TEMP_API (lot01, lot02, lot03, lot04)
+      VALUES (NEW.organizationId, NEW.warehouseId, NEW.billingSummaryId, NEW.ediErrorCode2);
+
+  -- SET NEW.billingSummaryId = NEW.ediErrorCode2;
+  END IF;
+END
+$$
+
+DELIMITER ;

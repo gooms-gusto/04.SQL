@@ -1,0 +1,17 @@
+﻿SELECT
+DISTINCT
+ -- idEstimasi,
+ -- organtizationId,
+warehouseId AS WAREHOUSE_ID,
+salesOffice as SALES_AREA,
+ -- customerId,
+CASE WHEN divisionNo = '' THEN '62' ELSE divisionNo END  AS DIVISION_CODE,
+customerCode as SAP_CUSTOMER_ID,
+CASE WHEN rate > 1000000 THEN rate ELSE totalAmount END AS BILLING_AMOUNT,
+ CASE
+        WHEN DAY(CURDATE()) > 25 THEN 
+        DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL (25 - DAY(CURDATE()) + DAY(LAST_DAY(CURDATE()))) DAY),'%m')
+        ELSE  DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL (25 - DAY(CURDATE())) DAY),'%m') END AS MONTH_PERIOD,
+        DATE_FORMAT(CURRENT_DATE(),'%Y') AS  YEAR_PERIOD
+FROM bt_estimasi_storage 
+WHERE DATE_FORMAT(DATE(addDate),'%Y%m%d') = DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL 1 DAY),'%Y%m%d') and warehouseId NOT IN ('SMARTSBY01');

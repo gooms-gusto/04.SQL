@@ -1,0 +1,180 @@
+﻿
+
+
+SELECT * FROM Z_BAS_CUSTOMER_CUSTBILLING zbcc;
+SELECT * FROM Z_BAS_CUSTOMER_CUSTBILLING_DETAILS zbccd;
+
+
+-- SELECT COUNT(*) FROM BIL_SUMMARY bs     
+-- where organizationId='OJV_CML'  AND bs.customerId='YFI' AND bs.warehouseId='CBT01'
+--  AND bs.addWho='CUSTOMBILL'   AND bs.arNo='*'  AND bs.chargeCategory='OB' AND DATE(bs.addTime) > getBillFMDate(25);
+-- 
+-- 
+-- SELECT COUNT(*) FROM BIL_SUMMARY bs     
+-- where organizationId='OJV_CML'  AND bs.customerId='YFI' AND bs.warehouseId='JBK01'
+--  AND bs.addWho='CUSTOMBILL'   AND bs.arNo='*'  AND bs.chargeCategory='OB' AND DATE(bs.addTime) > getBillFMDate(25);
+
+
+
+
+SELECT * FROM BIL_SUMMARY bs     
+where organizationId='OJV_CML'  AND bs.customerId='MAP' AND bs.warehouseId='CBT02' AND bs.docNo IN ('SAMSO000036005',
+'SAMSO000036008',
+'SAMSO000036009',
+'SAMSO000036039',
+'SAMSO000036040',
+'SAMSO000036043',
+'SAMSO000036045',
+'SAMSO000036046',
+'SAMSO000036047',
+'SAMSO000036049',
+'SAMSO000036052',
+'SAMSO000036055',
+'SAMSO000036071',
+'SAMSO000036072',
+'SAMSO000036195',
+'SAMSO000036200',
+'SAMSO000036201',
+'SAMSO000036202',
+'SAMSO000036203',
+'SAMSO000036204',
+'SAMSO000036205',
+'SAMSO000036206',
+'SAMSO000036207',
+'SAMSO000036209',
+'SAMSO000036210',
+'SAMSO000036211',
+'SAMSO000036212',
+'SAMSO000036213',
+'SAMSO000036214',
+'SAMSO000036237',
+'SAMSO000036244',
+'SAMSO000036529',
+'SAMSO000036531',
+'SAMSO000036563',
+'SAMSO000036565',
+'SAMSO000036566',
+'SAMSO000036568',
+'SAMSO000036572',
+'SAMSO000036575',
+'SAMSO000036652',
+'SAMSO000036741',
+'SAMSO000036742',
+'SAMSO000036743',
+'SAMSO000036745',
+'SAMSO000036748',
+'SAMSO000036749',
+'SAMSO000036751',
+'SAMSO000036753',
+'SAMSO000036755',
+'SAMSO000036756',
+'SAMSO000036758',
+'SAMSO000036760',
+'SAMSO000036761',
+'SAMSO000036763',
+'SAMSO000036764',
+'SAMSO000036765',
+'SAMSO000036766',
+'SAMSO000036767',
+'SAMSO000036769',
+'SAMSO000036770',
+'SAMSO000036771',
+'SAMSO000036772',
+'SAMSO000036774',
+'SAMSO000036776',
+'SAMSO000036777',
+'SAMSO000036778',
+'SAMSO000036779',
+'SAMSO000036780',
+'SAMSO000036781',
+'SAMSO000036782',
+'SAMSO000036784',
+'SAMSO000036785',
+'SAMSO000036786',
+'SAMSO000036800',
+'SAMSO000036811',
+'SAMSO000036827',
+'SAMSO000036837',
+'SAMSO000036839',
+'SAMSO000036870',
+'SAMSO000036871',
+'SAMSO000036874',
+'SAMSO000036898',
+'SAMSO000036900',
+'SAMSO000036907',
+'SAMSO000036908',
+'SAMSO000036919',
+'SAMSO000036920',
+'SAMSO000036921',
+'SAMSO000036922',
+'SAMSO000036923',
+'SAMSO000036937',
+'SAMSO000036938',
+'SAMSO000036941',
+'SAMSO000036952',
+'SAMSO000036958',
+'SAMSO000036959',
+'SAMSO000036969',
+'SAMSO000036971',
+'SAMSO000036973',
+'SAMSO000036977',
+'SAMSO000036978',
+'SAMSO000036979',
+'SAMSO000036994')
+ AND bs.addWho='CUSTOMBILL'   AND bs.arNo='*'  AND bs.chargeCategory='OB' AND DATE(bs.addTime) > getBillFMDate(25);
+
+
+SELECT * FROM BIL_SUMMARY bs     
+where organizationId='OJV_CML'  AND bs.customerId='MAP' AND bs.warehouseId='CBT02' AND bs.docNo IN ('KEDASN250908020',
+'KEDASN250908021',
+'KEDASN250908022',
+'KEDASN250908023',
+'KEDASN250908024',
+'KEDASN250908025',
+'KEDASN250908026')
+ AND bs.addWho='CUSTOMBILL'   AND bs.arNo='*'  AND bs.chargeCategory='IB' AND DATE(bs.addTime) > getBillFMDate(25);
+
+
+
+
+
+-- 
+-- 
+-- DELETE FROM BIL_SUMMARY bs     
+-- where organizationId='OJV_CML'
+-- AND warehouseId='CBT01' and customerId='PPG' AND
+--  DATE(addTime) > getBillFMDate(25)  and arNo = '*'  
+--  AND chargeCategory IN ('IB','OB')
+-- AND addWho='CUSTOMBILL' AND billingSummaryId LIKE 'INVC250915000000017292*%';
+
+
+
+-- 
+-- SELECT arNo,docNo FROM BIL_SUMMARY 
+-- where organizationId='OJV_CML'
+-- AND warehouseId='CBT01' and customerId='PPG' AND
+--  DATE(addTime) > getBillFMDate(25)  and arNo = '*'  
+--  AND chargeCategory IN ('IB','OB')
+-- AND addWho='CUSTOMBILL' AND billingSummaryId LIKE 'INVC250915000000017292*%';
+
+
+
+
+
+
+
+-- delete vas SO
+--          SELECT dov.vasType,dod.orderNo 
+--                    FROM DOC_ORDER_VAS dov INNER JOIN
+--                    DOC_ORDER_DETAILS dod ON dov.organizationId = dod.organizationId
+--                    AND dov.warehouseId = dod.warehouseId 
+--                    AND dov.orderNo = dod.orderNo 
+--                    AND dov.orderLineNo = dod.orderLineNo 
+--                    INNER JOIN DOC_ORDER_HEADER_UDF dohu ON dov.organizationId = dohu.organizationId
+--                    AND dod.warehouseId = dohu.warehouseId AND dov.orderNo = dohu.orderNo
+--                    WHERE dov.organizationId='OJV_CML' AND dov.warehouseId='CBT01' AND dod.customerId='PPG'
+--                    AND DATE(dohu.closeTime) > getBillFMDate(25);
+
+
+--  DELETE FROM BIL_SUMMARY bs WHERE organizationId='OJV_CML' AND warehouseId='CBT01' AND customerId='PPG' 
+--  AND chargeCategory='VA' AND docType='SO' AND DATE(addTime)> getBillFMDate(25) AND arNo = '*';

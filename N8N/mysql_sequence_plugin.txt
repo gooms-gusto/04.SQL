@@ -1,0 +1,213 @@
+/* MySQL Auto-Reset Sequence Plugin
+ * This plugin provides a UDF that automatically resets to 1 for each SELECT statement
+ * Compile with: gcc -shared -fPIC -o sequence_plugin.so sequence_plugin.cpp `mysql_config --cflags` -lmysqlservices
+ */
+
+#include <mysql.h>
+#include <string.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <time.h>
+
+/* Handle MySQL version differences */
+#if MYSQL_VERSION_ID >= 80001
+typedef bool my_bool;
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Thread-local storage for per-query sequence tracking */
+static __thread struct {
+    unsigned long long query_id;
+    unsigned long long sequence_value;
+    time_t last_reset_time;
+} thread_sequence = {0, 0, 0};
+
+/* Global mutex for thread safety */
+static pthread_mutex_t sequence_mutex = PTHREAD_MUTEX_INITIALIZER;
+static unsigned long long global_query_counter = 0;
+
+/* Function declarations */
+my_bool auto_sequence_init(UDF_INIT *initid, UDF_ARGS *args, char *message);
+void auto_sequence_deinit(UDF_INIT *initid);
+long long auto_sequence(UDF_INIT *initid, UDF_ARGS *args, char *is_null, char *error);
+
+my_bool row_sequence_init(UDF_INIT *initid, UDF_ARGS *args, char *message);
+void row_sequence_deinit(UDF_INIT *initid);
+long long row_sequence(UDF_INIT *initid, UDF_ARGS *args, char *is_null, char *error);
+
+/* Per-query state tracking */
+typedef struct {
+    unsigned long long query_id;
+    unsigned long long current_value;
+    unsigned long long start_value;
+    unsigned long long increment;
+    char first_call;
+} sequence_state;
+
+/* AUTO_SEQUENCE() - Automatically resets to 1 for each new SELECT */
+my_bool auto_sequence_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
+    sequence_state *state;
+    
+    /* Check arguments */
+    if (args->arg_count > 2) {
+        strcpy(message, "AUTO_SEQUENCE() accepts at most 2 arguments (start_value, increment)");
+        return 1;
+    }
+    
+    if (args->arg_count >= 1 && args->arg_type[0] != INT_RESULT) {
+        strcpy(message, "AUTO_SEQUENCE() start_value must be an integer");
+        return 1;
+    }
+    
+    if (args->arg_count == 2 && args->arg_type[1] != INT_RESULT) {
+        strcpy(message, "AUTO_SEQUENCE() increment must be an integer");
+        return 1;
+    }
+    
+    /* Allocate state memory */
+    state = (sequence_state*)malloc(sizeof(sequence_state));
+    if (!state) {
+        strcpy(message, "Could not allocate memory");
+        return 1;
+    }
+    
+    /* Initialize state */
+    state->query_id = 0;
+    state->current_value = 0;
+    state->start_value = 1;  /* Default start value */
+    state->increment = 1;     /* Default increment */
+    state->first_call = 1;
+    
+    initid->ptr = (char*)state;
+    initid->maybe_null = 0;
+    initid->const_item = 0;
+    
+    return 0;
+}
+
+void auto_sequence_deinit(UDF_INIT *initid) {
+    if (initid->ptr) {
+        free(initid->ptr);
+    }
+}
+
+long long auto_sequence(UDF_INIT *initid, UDF_ARGS *args, char *is_null, char *error) {
+    sequence_state *state = (sequence_state*)initid->ptr;
+    unsigned long long current_query_id;
+    long long result;
+    
+    /* Get custom start value and increment if provided */
+    if (args->arg_count >= 1 && args->args[0]) {
+        state->start_value = *((long long*)args->args[0]);
+    }
+    
+    if (args->arg_count >= 2 && args->args[1]) {
+        state->increment = *((long long*)args->args[1]);
+    }
+    
+    /* Get or create query ID for this execution context */
+    pthread_mutex_lock(&sequence_mutex);
+    
+    /* Simple query detection: if this is the first call or significant time passed */
+    if (state->first_call) {
+        global_query_counter++;
+        current_query_id = global_query_counter;
+        state->first_call = 0;
+    } else {
+        current_query_id = state->query_id;
+    }
+    
+    pthread_mutex_unlock(&sequence_mutex);
+    
+    /* Check if this is a new query */
+    if (state->query_id != current_query_id) {
+        /* New query detected - reset sequence */
+        state->query_id = current_query_id;
+        state->current_value = state->start_value;
+        result = state->current_value;
+    } else {
+        /* Same query - increment */
+        state->current_value += state->increment;
+        result = state->current_value;
+    }
+    
+    return result;
+}
+
+/* ROW_SEQUENCE() - Alternative implementation using connection ID */
+my_bool row_sequence_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
+    /* This version uses a different approach - tracking by connection and time */
+    if (args->arg_count > 2) {
+        strcpy(message, "ROW_SEQUENCE() accepts at most 2 arguments (start_value, increment)");
+        return 1;
+    }
+    
+    if (args->arg_count >= 1 && args->arg_type[0] != INT_RESULT) {
+        strcpy(message, "ROW_SEQUENCE() start_value must be an integer");
+        return 1;
+    }
+    
+    if (args->arg_count == 2 && args->arg_type[1] != INT_RESULT) {
+        strcpy(message, "ROW_SEQUENCE() increment must be an integer");
+        return 1;
+    }
+    
+    initid->maybe_null = 0;
+    initid->const_item = 0;
+    initid->ptr = NULL;
+    
+    return 0;
+}
+
+void row_sequence_deinit(UDF_INIT *initid) {
+    /* Nothing to deallocate for this implementation */
+}
+
+long long row_sequence(UDF_INIT *initid, UDF_ARGS *args, char *is_null, char *error) {
+    time_t current_time = time(NULL);
+    long long start_value = 1;
+    long long increment = 1;
+    long long result;
+    
+    /* Get custom values if provided */
+    if (args->arg_count >= 1 && args->args[0]) {
+        start_value = *((long long*)args->args[0]);
+    }
+    
+    if (args->arg_count >= 2 && args->args[1]) {
+        increment = *((long long*)args->args[1]);
+    }
+    
+    /* Reset if more than 1 second has passed (new query assumption) */
+    if (current_time - thread_sequence.last_reset_time > 0) {
+        thread_sequence.sequence_value = start_value;
+        thread_sequence.last_reset_time = current_time;
+        thread_sequence.query_id++;
+    } else {
+        thread_sequence.sequence_value += increment;
+    }
+    
+    result = thread_sequence.sequence_value;
+    
+    return result;
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+/* SQL Installation Script:
+ * 
+ * After compiling the plugin, install it in MySQL with:
+ * 
+ * CREATE FUNCTION auto_sequence RETURNS INTEGER SONAME 'sequence_plugin.so';
+ * CREATE FUNCTION row_sequence RETURNS INTEGER SONAME 'sequence_plugin.so';
+ * 
+ * To uninstall:
+ * 
+ * DROP FUNCTION auto_sequence;
+ * DROP FUNCTION row_sequence;
+ */

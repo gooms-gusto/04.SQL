@@ -1,0 +1,8 @@
+UPDATE DOC_ASN_DETAILS A, BSM_CONFIG B SET A.receivingLocation = B.defaultValue 
+WHERE B.organizationId = {organizationId}
+AND B.configId = 'DFT_RCV_LOC'
+AND A.organizationId = {organizationId}
+AND A.warehouseId = {warehouseId}
+AND A.customerId = {storeId}
+AND A.asnNo = {docNo}
+AND A.asnLineNo = {docLineNo}

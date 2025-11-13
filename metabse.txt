@@ -1,0 +1,4 @@
+SELECT {{adddate}} as dateku, `wms_cml.BAS_SKU`.`organizationId` AS `organizationId`, `wms_cml.BAS_SKU`.`sku`,`wms_cml.BAS_SKU`.`addTime` from `wms_cml.BAS_SKU`
+WHERE (`wms_cml.BAS_SKU`.`addTime` >= timestamp_trunc({{adddate}}, day, 'Asia/Jakarta')
+   AND `wms_cml.BAS_SKU`.`addTime` < timestamp_trunc(timestamp_add({{adddate}}, INTERVAL 1 day), day, 'Asia/Jakarta')) 
+LIMIT 1048578

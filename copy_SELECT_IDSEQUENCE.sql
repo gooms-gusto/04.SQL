@@ -1,0 +1,8 @@
+﻿
+
+
+SELECT * FROM SYS_IDSEQUENCE si WHERE si.warehouseId = 'SMPR01'AND si.idName  IN ('LTL_ASNNO');
+
+SELECT * FROM SYS_IDSEQUENCE_ML si WHERE si.warehouseId = 'SMPR01'AND si.idName  IN ('ASNNO');
+
+SELECT * FROM SYS_IDSEQUENCE_UDF  si WHERE si.warehouseId = 'SMPR01'AND si.idName  IN ('LTL_ASNNO');

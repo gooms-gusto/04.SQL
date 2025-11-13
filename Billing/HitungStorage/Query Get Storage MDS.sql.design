@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Devart (www.devart.com), SQL document design file -->
+<!-- Modifying this generated file will probably render it invalid -->
+<Document>
+  <Properties>
+    <Type>SQL Document Design</Type>
+    <DatabaseProvider>59f90733-4d68-4fdf-82a7-f0fcbf5460aa</DatabaseProvider>
+    <ProviderVersion>9.1.21.0</ProviderVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </Properties>
+  <Connection>
+    <ConnectionModel>
+      <PropertyValue Name="Database">59f90733-4d68-4fdf-82a7-f0fcbf5460aa</PropertyValue>
+      <PropertyValue Name="ConnectionString" xml:space="preserve">User Id=sa;Host=localhost;Port=63306;Protocol=Ssh;Character Set=utf8;SSH Host=172.31.9.92;SSH Port=22;SSH User=akbar_ardiansah;SSH Private Key="D:\OneDriveLinc\OneDrive - CIPTA MAPAN LOGISTIK PT\03.VPN\Key-WMSDB_CLM\Key-WMSDB.ppk";SSH Authentication Type=PublicKey</PropertyValue>
+      <PropertyValue Name="ExecutionTimeout">0</PropertyValue>
+    </ConnectionModel>
+    <Database>wms_cml</Database>
+  </Connection>
+  <Views ShowAdditionalViews="False" IsLayoutActiveAttribute="True" MainViewAttribute="Code" MainViewScale="50">
+    <View Name="Design" Visible="False" />
+    <View Name="Code" Visible="True">
+      <Data />
+    </View>
+    <View Name="Data" Visible="True" />
+    <View Name="Profiler" Visible="False" />
+    <View Name="PivotGrid" Active="True" Visible="True">
+      <Data>
+        <NativePivotGrid>
+          <DataSource Visible="True" Width="240" />
+          <XtraSerializer version="1.0" application="PivotGrid">
+  <property name="#LayoutVersion" />
+  <property name="Fields" iskey="true" value="5">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="CustomTotals" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true" />
+      </property>
+      <property name="ImageIndex">-1</property>
+      <property name="ToolTips" isnull="true" iskey="true">
+        <property name="HeaderText" />
+        <property name="ValueText" />
+      </property>
+      <property name="FieldEditName" />
+      <property name="Name">XstockDate</property>
+      <property name="FieldName">stockDate</property>
+      <property name="Caption">stockDate</property>
+      <property name="Index">0</property>
+      <property name="TotalsVisibility">CustomTotals</property>
+      <property name="Tag" type="Devart.DbForge.PivotGrid.ColumnDescription">stockDate;System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</property>
+      <property name="Visible">false</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="CustomTotals" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true" />
+      </property>
+      <property name="ImageIndex">-1</property>
+      <property name="ToolTips" isnull="true" iskey="true">
+        <property name="HeaderText" />
+        <property name="ValueText" />
+      </property>
+      <property name="FieldEditName" />
+      <property name="Name">XcustomerId</property>
+      <property name="FieldName">customerId</property>
+      <property name="Caption">customerId</property>
+      <property name="Index">1</property>
+      <property name="TotalsVisibility">CustomTotals</property>
+      <property name="Tag" type="Devart.DbForge.PivotGrid.ColumnDescription">customerId;System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</property>
+      <property name="Visible">false</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="CustomTotals" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true" />
+      </property>
+      <property name="ImageIndex">-1</property>
+      <property name="ToolTips" isnull="true" iskey="true">
+        <property name="HeaderText" />
+        <property name="ValueText" />
+      </property>
+      <property name="FieldEditName" />
+      <property name="Name">XwarehouseId</property>
+      <property name="FieldName">warehouseId</property>
+      <property name="Caption">warehouseId</property>
+      <property name="Index">2</property>
+      <property name="TotalsVisibility">CustomTotals</property>
+      <property name="Tag" type="Devart.DbForge.PivotGrid.ColumnDescription">warehouseId;System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</property>
+      <property name="Visible">false</property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="CustomTotals" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true" />
+      </property>
+      <property name="ImageIndex">-1</property>
+      <property name="ToolTips" isnull="true" iskey="true">
+        <property name="HeaderText" />
+        <property name="ValueText" />
+      </property>
+      <property name="FieldEditName" />
+      <property name="Name">Xskugroup1</property>
+      <property name="Area">ColumnArea</property>
+      <property name="FieldName">skugroup1</property>
+      <property name="Caption">skugroup1</property>
+      <property name="Index">3</property>
+      <property name="TotalsVisibility">CustomTotals</property>
+      <property name="Tag" type="Devart.DbForge.PivotGrid.ColumnDescription">skugroup1;System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</property>
+      <property name="AreaIndex">0</property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="CustomTotals" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true" />
+      </property>
+      <property name="ImageIndex">-1</property>
+      <property name="ToolTips" isnull="true" iskey="true">
+        <property name="HeaderText" />
+        <property name="ValueText" />
+      </property>
+      <property name="FieldEditName" />
+      <property name="Name">XqtyCharge</property>
+      <property name="Area">DataArea</property>
+      <property name="FieldName">qtyCharge</property>
+      <property name="Caption">qtyCharge</property>
+      <property name="Index">4</property>
+      <property name="TotalsVisibility">CustomTotals</property>
+      <property name="Tag" type="Devart.DbForge.PivotGrid.ColumnDescription">qtyCharge;System.Double,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</property>
+      <property name="AreaIndex">0</property>
+    </property>
+  </property>
+  <property name="Prefilter" isnull="true" iskey="true">
+    <property name="Criteria" isnull="true" />
+    <property name="ShowOperandTypeIcon">false</property>
+    <property name="Enabled">true</property>
+  </property>
+  <property name="DefaultFilterEditorView">Visual</property>
+  <property name="OptionsBehavior" isnull="true" iskey="true">
+    <property name="HorizontalScrolling">Control</property>
+  </property>
+  <property name="OptionsCustomization" isnull="true" iskey="true">
+    <property name="AllowHideFields">Always</property>
+  </property>
+  <property name="OptionsChartDataSource" isnull="true" iskey="true">
+    <property name="FieldValuesProvideMode">DisplayText</property>
+  </property>
+  <property name="Groups" iskey="true" value="0" />
+  <property name="FormatRules" iskey="true" value="0" />
+  <property name="FormatConditions" iskey="true" value="0" />
+</XtraSerializer>
+        </NativePivotGrid>
+        <NativeChart Visible="False" Width="202">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ChartXmlSerializer version="18.1.4.0"&gt;
+  &lt;Chart AppearanceNameSerializable="Default" SelectionMode="None" SeriesSelectionMode="Series"&gt;
+    &lt;DataContainer BoundSeriesSorting="None"&gt;
+      &lt;SeriesTemplate CrosshairContentShowMode="Default" CrosshairEmptyValueLegendText="" /&gt;
+    &lt;/DataContainer&gt;
+  &lt;/Chart&gt;
+&lt;/ChartXmlSerializer&gt;</NativeChart>
+      </Data>
+    </View>
+  </Views>
+</Document>

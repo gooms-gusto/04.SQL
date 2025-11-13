@@ -1,0 +1,32 @@
+﻿SELECT * FROM  BAS_CUSTOMER bc WHERE bc.udf02 IN ('3000009456',
+'3000001618',
+'3000019518',
+'3000002046',
+'3000007677',
+'8000000010',
+'3000013580',
+'3000007550',
+'3000005193',
+'3000007728','8000000015') AND bc.customerType='OW' AND bc.activeFlag='Y';
+
+SELECT * FROM BIL_TARIFF_MASTER btm WHERE btm.customerId='DKJ-SBY';
+
+SELECT * FROM 
+
+
+SELECT * FROM BIL_TARIFF_HEADER bth WHERE bth.tariffMasterId='BIL00049';
+
+
+SELECT * FROM BIL_TARIFF_DETAILS btd WHERE btd.tariffId='BIL00375';
+
+-- get warehouse
+SELECT * FROM BSM_WAREHOUSE bw WHERE bw.activeFlag='Y' AND bw.city='SURABAYA';
+
+
+
+-- get customer
+SELECT DISTINCT customerId,illi.warehouseId FROM INV_LOT_LOC_ID illi 
+WHERE illi.warehouseId IN (SELECT bw.warehouseId 
+FROM BSM_WAREHOUSE bw WHERE bw.activeFlag='Y') AND illi.customerId='MGLSBY';
+
+SELECT * from ACT_TRANSACTION_LOG atl WHERE atl.fmCustomerId='MGLSBY'

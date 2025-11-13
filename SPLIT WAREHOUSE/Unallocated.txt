@@ -1,0 +1,46 @@
+UPDATE DOC_ORDER_DETAILS SET QtyAllocated= '0.0' ,QtyAllocated_Each= QtyAllocated_Each - '100.0' ,
+QtySoftAllocated=QtySoftAllocated- '100.0' ,QtySoftAllocated_Each=QtySoftAllocated_Each- '100.0', 
+oprSeqFlag = '20251103090635000499RA172031009087[A3001]' ,editWho='WM_AARDIANSAH',
+editTime= NOW() WHERE organizationId= 'OJV_CML' AND warehouseId= 'CBT02' AND orderNO= 
+'MAP_ORDERNO000000176' AND orderLineNO= '1'  AND QtyAllocated_Each >= '100.0' 
+
+
+UPDATE INV_LOT_LOC_ID SET QtyAllocated=QtyAllocated- '100.0' ,
+editWho='WM_AARDIANSAH',editTime= NOW() WHERE organizationId= 'OJV_CML' 
+AND warehouseId= 'CBT02' AND LotNUm= '0021028' AND
+ TraceID= '2510200001' AND LocationID= 'A01-02'  AND QtyAllocated >= '100.0' 
+ 
+ UPDATE INV_LOT SET QtyAllocated=QtyAllocated- '100.0' ,QtyPreAllocated=QtyPreAllocated- '100.0', 
+ editWho='WM_AARDIANSAH',editTime= NOW() WHERE organizationId= 
+ 'OJV_CML' AND warehouseId= 'CBT02' AND LotNUm= '0021028'  AND QtyAllocated >= '100.0' 
+ 
+ 
+ DELETE FROM ACT_ALLOCATION_DETAILS WHERE organizationId= 'OJV_CML' 
+ AND warehouseId= 'CBT02' AND allocationDetailsID= '0003170' AND Status = '40'
+ 
+ DELETE FROM TSK_TASKLISTS WHERE organizationId= 'OJV_CML' AND warehouseId= 'CBT02' AND 
+ allocationDetailsID= '0003170' AND TaskProcess in ('00','02','15' )
+ 
+ S: INSERT INTO ACT_CANCEL_ALLOCATION_LOG (AllocationDetailsID, OrderNo, OrderLineNO, SKULineNO, WaveNo, Status, CustomerID, SKU,LotNUM, Location,TraceID, PackID, UOM, Qty, Qty_Each, QtyPicked_Each, QtyShipped_Each, PickToLocation,PickToTraceID,SoftAllocationDetailsID,CancelBy, CancelTime,organizationId,warehouseId) VALUES ( ? , ? , ? ,'0', ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,NOW(), ? , ? )
+P1(1,1): ["0003170","MAP_ORDERNO000000176","1","*","40","MAP","ZSI213750155-COS","0021028","A01-02","2510200001","1/0/110/1320-2.5X2.5X2.5","EA","100.00000000","100.00000000","0.00000000","0.00000000","SORTATIONCBT02","2510200001","*","WM_AARDIANSAH","OJV_CML","CBT02"]
+P2: []
+
+
+S: UPDATE DOC_ORDER_DETAILS SET lineStatus = ?,currentVersion=currentVersion+1,oprSeqFlag=?,editWho=?,editTime= NOW() WHERE organizationId= ? AND warehouseId= ? AND orderNo = ? AND orderLineNo = ?
+P1(1,1): ["00","20251103090635000572RA172031009087[A3001]","WM_AARDIANSAH","OJV_CML","CBT02","MAP_ORDERNO000000176","1"]
+P2: []
+
+S: UPDATE DOC_ORDER_HEADER SET soStatus = ?,currentVersion=currentVersion+1,oprSeqFlag=?,editWho=?,editTime= NOW() WHERE organizationId= ? AND warehouseId= ? AND orderNo = ? 
+P1(1,1): ["00","20251103090635000572RA172031009087[A3001]","WM_AARDIANSAH","OJV_CML","CBT02","MAP_ORDERNO000000176"]
+P2: []
+
+DELETE a FROM DOC_ORDER_PACKING_SUMMARY a  LEFT JOIN ACT_ALLOCATION_DETAILS b  
+on a.organizationId = b.organizationId and a.warehouseId=b.warehouseId 
+and a.traceId = b.pickToTraceId and a.orderNo=b.orderNo  
+WHERE a.organizationId = 'OJV_CML'  AND a.warehouseId= 'CBT02'  
+AND a.OrderNo = 'MAP_ORDERNO000000176' AND b.organizationId is null 
+
+S: INSERT INTO IDX_ORDERSTATUS_LOG(organizationId,warehouseId,seqNo,orderNo,orderStatus,changeTime,changeBy,ediSendFlag,oprSeqFlag,addWho,addTime) VALUES(?,?,UUID(),?,?,NOW(),?,?,?,?,NOW())
+P1(1,1): ["OJV_CML","CBT02","MAP_ORDERNO000000176","00","WM_AARDIANSAH","N","20251103090635000660RA172031009087[A3001]","WM_AARDIANSAH"]
+P2: []
+

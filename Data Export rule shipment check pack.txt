@@ -1,0 +1,148 @@
+SELECT
+        'CBT01'          AS CUSTOMERID_WH   ,
+        'MAP'            AS CUSTOMERID_OW   ,
+        '*'              AS USERDEFINEDFIELD,
+        'ESMG00000061'   AS CUSTOMERID_CA   ,
+        d.customerDescr2 AS CUSTOMER        ,
+        (
+                CASE WHEN d.customerType = '        
+OW' AND a.customerId = 'ECMAMA' THEN
+                                'http://        
+-- 147.139.134.156:18080/A05SysBizWeb/Mamachoice.jpg'
+                        WHEN d.customerType = 'OW' AND a.customerId = 'ECMAMAB2C' THEN
+                                'http://147.139.134.156:18080/A05SysBizWeb/Mamachoice.jpg' ELSE ' '
+                END)                 AS URL               ,
+        a.SOREFERENCE1               AS DONUMBER          ,
+        a.CONSIGNEENAME              AS BUYER_NAME        ,
+        a.CONSIGNEETEL1              AS BUYER_CONTACT     ,
+        a.CONSIGNEETEL2              AS BUYER_CONTACT2    ,
+        a.WAREHOUSEID                AS WAREHOUSEID       ,
+        SUM(ROUND(b.GROSSWEIGHT, 4)) AS WEIGHT            ,
+        a.SOREFERENCE5               AS AWB               ,
+        a.CONSIGNEEADDRESS1          AS CONSIGNEE_ADDRESS1,
+        a.CONSIGNEEADDRESS2          AS CONSIGNEE_ADDRESS2,
+        a.CONSIGNEEADDRESS3          AS CONSIGNEE_ADDRESS3,
+        a.CONSIGNEEZIP               AS CONSIGNEE_ZIP     ,
+        a.CONSIGNEECITY              AS CONSIGNEE_CITY    ,
+        a.CONSIGNEEPROVINCE          AS CONSIGNEE_PROVINCE,
+        c.CODEDESCR                  AS CONSIGNEE_COUNTRY ,
+        a.CARRIERID                  AS CARRIER_ID        ,
+        a.HEDI05                     AS HEDI05            ,
+        a.HEDI02                     AS TOTALPRICE        ,
+        a.ORDERNO                    AS ORDERNO           ,
+        a.hedi01                     AS MARKETPLACE       ,
+        a.hedi09                     AS ASURANSI          ,
+        IFNULL(a.noteText, '')       AS NOTE              ,
+        ca.CARRIERNAME                                    ,
+        dod.SKU_GROUP4    AS PRODUCTCATEGORY1                ,
+        dod.SKU_GROUP5    AS PRODUCTCATEGORY2                ,
+        d.contact1_tel1   AS TELP_CUST                       ,
+        consigneeDistrict AS CONSIGNEEDISTRICT               ,
+        consigneeStreet   AS CONSIGNEESTREET
+FROM
+        DOC_ORDER_HEADER a
+LEFT JOIN
+        (
+                
+                SELECT
+                        dod.organizationId,
+                        dod.warehouseId   ,
+                        orderNo           ,
+                        (
+                                CASE WHEN s.sku_group4 = 'NON FRAGILE' THEN '' ELSE s.sku_group4
+                                END) AS sku_group4,
+                        (
+                                CASE WHEN s.sku_group5 = 'NON LIQUID' THEN '' ELSE s.sku_group5 END
+                        ) AS sku_group5
+                FROM
+                        DOC_ORDER_DETAILS dod
+                INNER JOIN BAS_SKU s
+                ON
+                        dod.sku            = s.sku
+                        AND dod.customerId = s.customerId
+                WHERE
+                        dod.organizationId  = '@{bizOrgId}'
+                        AND dod.warehouseId = '@{bizWarehouseId}'
+                        AND dod.orderNo    IN('${CHECK.orderNo}')
+                GROUP BY
+                        dod.organizationId,
+                        dod.warehouseId   ,
+                        orderNo           ,
+                        s.sku_group4      ,
+                        s.sku_group5
+                ORDER BY
+                        s.sku_group4,
+                        s.sku_group5 LIMIT 1
+        )
+        dod ON a.orderNo = dod.orderNo
+LEFT JOIN DOC_ORDER_PACKING_SUMMARY b
+ON
+        a.orderNo            = b.orderNo
+        AND a.organizationId = b.organizationId
+        AND a.warehouseId    = b.warehouseId
+LEFT JOIN BAS_CUSTOMER d
+ON
+        a.organizationId   = d.organizationId
+        AND a.customerId   = d.customerId
+        AND d.customerType = 'OW'
+LEFT JOIN BSM_CODE_ML c
+ON
+        c.organizationId = a.organizationId
+        AND c.codeId     = a.consigneeCountry
+        AND c.codeType   = 'COU_COD'
+LEFT JOIN
+        (
+                
+                SELECT
+                        organizationId,
+                        customerId    ,
+                        REPLACE(customerDescr1, 'Pos Indonesia - ', '') AS CARRIERNAME
+                FROM
+                        BAS_CUSTOMER
+                WHERE
+                        activeFlag         = 'Y'
+                        AND customerType   = 'CA'
+                        AND organizationId = 'OJV_CML'
+        )
+        ca
+ON
+        ca.customerId = a.carrierId
+WHERE
+        1                    = 1
+        AND a.soStatus      IN('40', '61', '62', '63', '65', '66', '70', '99', '90')
+        AND a.organizationId = 'XXX'
+        AND a.warehouseId    = 'XXX'
+GROUP BY
+        a.carrierId        ,
+        a.soReference1     ,
+        a.udf01            ,
+        a.orderType        ,
+        d.customerType     ,
+        a.consigneeTel2    ,
+        a.hedi05           ,
+        a.SOREFERENCE2     ,
+        a.CONSIGNEENAME    ,
+        a.CONSIGNEETEL1    ,
+        a.WAREHOUSEID      ,
+        a.SOREFERENCE5     ,
+        a.CONSIGNEEADDRESS1,
+        a.CONSIGNEEADDRESS2,
+        a.CONSIGNEEADDRESS3,
+        a.CONSIGNEEZIP     ,
+        a.CONSIGNEECITY    ,
+        a.CONSIGNEEPROVINCE,
+        c.CODEDESCR        ,
+        a.ORDERNO          ,
+        b.GROSSWEIGHT      ,
+        a.HEDI02           ,
+        a.customerId       ,
+        a.hedi01           ,
+        a.warehouseId      ,
+        a.hedi09           ,
+        a.noteText         ,
+        ca.CARRIERNAME     ,
+        dod.sku_group4     ,
+        dod.sku_group5     ,
+        d.contact1_tel1    ,
+        consigneeDistrict  ,
+        consigneeStreet

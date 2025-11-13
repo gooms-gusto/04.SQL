@@ -1,0 +1,12 @@
+﻿SELECT * FROM BIL_SUMMARY bs WHERE bs.customerId='LTL' AND  
+bs.addWho='EDI' AND bs.organizationId='OJV_CML' 
+AND DATE_FORMAT(bs.addTime,'%Y-%m-%d')=DATE_FORMAT(CURDATE(),'%Y-%m-%d');
+
+DELETE FROM BIL_SUMMARY WHERE customerId='LTL' AND  
+addWho='EDI' AND organizationId='OJV_CML'  AND warehouseId='CBT01'
+AND DATE_FORMAT(addTime,'%Y-%m-%d')=DATE_FORMAT(CURDATE(),'%Y-%m-%d');
+
+SELECT * FROM BIL_SUMMARY bs WHERE bs.billingSummaryId='INV240516000392*001'
+SELECT * FROM SYS_IDSEQUENCE WHERE idName='BILLINGSUMMARYID';
+
+1 Duplicate entry 'OJV_CML-CBT01-INV240516000382*001' for key 'PRIMARY' SQL1.sql 10 1 

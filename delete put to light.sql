@@ -1,0 +1,18 @@
+﻿USE wms_cml;
+
+
+SELECT CONCAT('DELETE FROM IDX_PUTTOLIGHT WHERE warehouseId=''CBT02-B2C'' AND waveNo=''',A.waveNo,'''',';') FROM IDX_PUTTOLIGHT A 
+  INNER JOIN DOC_WAVE_HEADER B ON 
+  A.organizationId = B.organizationId
+  AND A.warehouseId = B.warehouseId 
+  AND A.waveNo = B.waveNo
+  AND A.customerId = B.customerId
+WHERE A.warehouseId='CBT02-B2C'  AND B.waveStatus <> '90'
+  GROUP BY A.waveNo;
+
+
+DELETE FROM IDX_PUTTOLIGHT WHERE warehouseId='CBT02-B2C' AND waveNo='WV23030002';
+
+  CREATE TABLE IDX_PUTTOLIGHTBAK050423 SELECT * FROM IDX_PUTTOLIGHTBAK050423 
+
+    DELETE FROM IDX_PUTTOLIGHT WHERE warehouseId='CBT02-B2C' AND waveNo='WV23030004';

@@ -1,0 +1,28 @@
+﻿  
+  
+  
+    UPDATE wms_cml.SYS_IDSEQUENCE_ML
+      SET idName='CARTNO01'
+      WHERE idName='CARTNO' AND warehouseId='CBT02';
+  
+  
+  SELECT * FROM wms_cml.SYS_IDSEQUENCE_UDF WHERE idName='RETURNNO' AND warehouseId='CBT02';
+  SELECT * FROM wms_cml.SYS_IDSEQUENCE_ML WHERE  idName='RETURNNO'  AND warehouseId='CBT02';
+  SELECT * FROM wms_cml.SYS_IDSEQUENCE WHERE  idName='RETURNNO'  AND warehouseId='CBT02';
+
+
+  SELECT * FROM wms_cml.DOC_ASN_DETAILS WHERE warehouseid='CBT02' ;
+
+    SELECT * FROM wms_cml.DOC_ASN_HEADER WHERE warehouseid='CBT02' ;
+
+
+
+
+       UPDATE wms_cml.SYS_IDSEQUENCE_ML SET idName='CARTONNO01'    WHERE idName='CARTONNO' AND warehouseId='CBT02';
+
+
+
+
+        SELECT * FROM WMS_FTEST.SYS_IDSEQUENCE_UDF WHERE idName='RETURNNO' AND warehouseId='CBT02';
+  SELECT * FROM WMS_FTEST.SYS_IDSEQUENCE_ML WHERE  idName='RETURNNO'  AND warehouseId='CBT02';
+  SELECT * FROM WMS_FTEST.SYS_IDSEQUENCE WHERE  idName='RETURNNO'  AND warehouseId='CBT02';

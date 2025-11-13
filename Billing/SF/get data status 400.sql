@@ -1,0 +1,1 @@
+﻿SELECT * FROM flux_data fd WHERE fd.datas_response LIKE '%400%' AND fd.type='invoiced' AND DATE(fd.created_at)='2023-11-10'

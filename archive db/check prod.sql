@@ -1,0 +1,49 @@
+﻿SELECT
+  *
+FROM RUL_MOVE_ARCHIVE WHERE activeFlag='Y' ;
+
+
+
+CALL CML_SPCOM_Archive_Process('OJV_CML', 'EN', 'AKBAR', @OUT);
+SELECT
+  @OUT;
+
+
+SELECT
+  *
+FROM RUL_ARCHIVE_TABLE_INFO
+WHERE   archiveCatagery='INBOUND' AND activeFlag='Y';
+ 
+SELECT
+  *
+FROM RUL_ARCHIVE_TABLE_INFO
+WHERE  archiveCatagery = 'OTHER'
+-- AND activeFlag = 'N';
+
+
+
+SELECT
+  *
+FROM RUL_MOVE_ARCHIVE_LOG
+ORDER BY addTime DESC;
+
+
+SELECT DISTINCT(warehouseId) FROM INV_LOT_LOC_ID illi  WHERE  YEAR(editTime) < 2021;
+
+
+SELECT COUNT(1) FROM ACT_TRANSACTION_LOG zib WHERE zib.warehouseId='CBT01' AND YEAR(zib.editTime) < 2021 AND zib.transactionType='IN';
+
+SELECT * FROM ACT_TRANSACTION_LOG WHERE transactionType='IN' ORDER BY ADDTIME DESC LIMIT 1
+
+
+
+SELECT * FROM DOC_VAS_HEADER WHERE warehouseId='CBT01'  AND YEAR(editTime) < 2021;
+
+SELECT * FROM DOC_VAS_DETAILS WHERE warehouseId='CBT01'  AND YEAR(editTime) < 2021;
+
+
+SELECT * FROM BIL_TARIFF_CONTAINER WHERE warehouseId='CBT01'  AND YEAR(editTime) < 2021;
+
+SELECT * FROM DOC_PO_DETAILS WHERE warehouseId='CBT01'  AND YEAR(editTime) < 2021;
+
+

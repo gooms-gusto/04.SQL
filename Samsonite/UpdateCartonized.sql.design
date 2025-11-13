@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Devart (www.devart.com), SQL document design file -->
+<!-- Modifying this generated file will probably render it invalid -->
+<Document>
+  <Properties>
+    <Type>SQL Document Design</Type>
+    <DatabaseProvider>59f90733-4d68-4fdf-82a7-f0fcbf5460aa</DatabaseProvider>
+    <ProviderVersion>8.1.22.0</ProviderVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </Properties>
+  <Connection Name="CML PROD">
+    <Category>97d28b16-2c45-4ff7-8a1c-5e257e1fcf82</Category>
+    <ConnectionString>User Id=sa;Host=localhost;Port=63306;Protocol=Ssh;Character Set=utf8;SSH Host=172.31.9.92;SSH Port=22;SSH User=akbar_ardiansah;SSH Private Key=C:\Users\lincbp\Downloads\Key-WMSDB\Key-WMSDB.ppk;SSH Authentication Type=PublicKey</ConnectionString>
+    <Database>wms_cml</Database>
+  </Connection>
+  <Views ShowAdditionalViews="False" IsLayoutActiveAttribute="True" MainViewAttribute="Code" MainViewScale="45">
+    <View Name="Design" Visible="False" />
+    <View Name="Code" Active="True" Visible="True">
+      <Data />
+    </View>
+    <View Name="Data" Visible="True" />
+    <View Name="Profiler" Visible="False" />
+    <View Name="PivotGrid" Visible="False" />
+  </Views>
+</Document>

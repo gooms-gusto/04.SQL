@@ -1,0 +1,4 @@
+﻿USE WMS_FTEST;
+
+
+SELECT * FROM BAS_PACKAGE bp WHERE bp.customerId IN ('API','ADS');

@@ -1,0 +1,12 @@
+﻿USE wms_cml;
+
+
+SELECT * FROM BSM_CODE_ML bcm WHERE bcm.codeid='RAT_BAS';
+
+
+SELECT * FROM BSM_CODETYPE_ML  bcm WHERE bcm.codeid='MAT_CODE';
+
+SELECT * FROM BSM_CODE_ML bcm WHERE bcm.codeType='RAT_BAS';
+
+SELECT * FROM BSM_CODE_ML bcm WHERE bcm.codeType='MAT_COD' AND bcm.languageId='en' AND bcm.codeid IN ('1700000033',
+'1700000037','1700000045','1700000046');

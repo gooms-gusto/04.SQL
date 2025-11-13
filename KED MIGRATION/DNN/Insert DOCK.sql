@@ -1,0 +1,17 @@
+select * from wms_cml.BAS_DOCK WHERE warehouseId='SMG-SO' AND dockNo IN('01','02','03')
+  
+
+ UPDATE wms_cml.BAS_DOCK set activeFlag='Y' WHERE warehouseId='SMG-SO' AND  dockNo IN('01','02','03')
+
+select * from wms_cml.BAS_DOCK_OPENTIME
+
+USE wms_cml;
+INSERT INTO BAS_DOCK(organizationId, warehouseId, dockNo, zoneGroup, in_flag, so_flag, equipmentType, vehicleType, operationType, activeFlag, noteText, udf01, udf02, udf03, udf04, udf05, currentVersion, oprSeqFlag, addWho, addTime, editWho, editTime, openTime1, closeTime1, openTime2, closeTime2, facilityId, supplierClass, XCoord, YCoord, receivingLocation, freightClass) VALUES('OJV_CML', 'SMG-SO', '01', 'null', 'Y', 'Y', '001', '100', '001', 'Y', x'', '', '', '', '', '', 100, '20210607104133000425RA172031009091[A1010]', 'UDFTIMER', '2021-09-21 10:41:33', 'UDFTIMER', '2021-06-07 10:41:33', NULL, NULL, NULL, NULL, '', '', NULL, NULL, '', '');
+INSERT INTO BAS_DOCK(organizationId, warehouseId, dockNo, zoneGroup, in_flag, so_flag, equipmentType, vehicleType, operationType, activeFlag, noteText, udf01, udf02, udf03, udf04, udf05, currentVersion, oprSeqFlag, addWho, addTime, editWho, editTime, openTime1, closeTime1, openTime2, closeTime2, facilityId, supplierClass, XCoord, YCoord, receivingLocation, freightClass) VALUES('OJV_CML', 'SMG-SO', '02', 'null', 'Y', 'Y', '001', '100', '001', 'Y', x'', '', '', '', '', '', 100, '20210607104311000944RA172031009091[A1010]', 'UDFTIMER', '2021-09-21 10:43:11', 'UDFTIMER', '2021-06-07 10:43:11', NULL, NULL, NULL, NULL, '', '', NULL, NULL, '', '');
+INSERT INTO BAS_DOCK(organizationId, warehouseId, dockNo, zoneGroup, in_flag, so_flag, equipmentType, vehicleType, operationType, activeFlag, noteText, udf01, udf02, udf03, udf04, udf05, currentVersion, oprSeqFlag, addWho, addTime, editWho, editTime, openTime1, closeTime1, openTime2, closeTime2, facilityId, supplierClass, XCoord, YCoord, receivingLocation, freightClass) VALUES('OJV_CML', 'SMG-SO', '03', 'null', 'Y', 'Y', '001', '100', '001', 'Y', x'', '', '', '', '', '', 100, '20210607104319000062RA172031009091[A1010]', 'UDFTIMER', '2021-09-21 10:43:19', 'UDFTIMER', '2021-06-07 10:43:19', NULL, NULL, NULL, NULL, '', '', NULL, NULL, '', '');
+
+
+USE wms_cml;
+INSERT INTO BAS_DOCK_OPENTIME(organizationId, warehouseId, dockNo, seqNo, openTimeFM, openTimeTO, descr, noteText, udf01, udf02, udf03, udf04, udf05, currentVersion, oprSeqFlag, addTime, addWho, editTime, editWho) VALUES('OJV_CML', 'SMG-SO', '01', 1, '00:00', '23:00', '', x'', '', '', '', '', '', 102, '20200609160335000430RA172031009087[A1010]', '2020-06-09 16:00:17', 'H334280', '2020-06-09 16:03:35', 'H334280');
+INSERT INTO BAS_DOCK_OPENTIME(organizationId, warehouseId, dockNo, seqNo, openTimeFM, openTimeTO, descr, noteText, udf01, udf02, udf03, udf04, udf05, currentVersion, oprSeqFlag, addTime, addWho, editTime, editWho) VALUES('OJV_CML', 'SMG-SO', '02', 1, '00:00', '23:00', '', x'', '', '', '', '', '', 100, '20200624090520000035RA172031009087[A1010]', '2020-06-24 09:05:20', 'H334280', '2020-06-24 09:05:20', 'H334280');
+INSERT INTO BAS_DOCK_OPENTIME(organizationId, warehouseId, dockNo, seqNo, openTimeFM, openTimeTO, descr, noteText, udf01, udf02, udf03, udf04, udf05, currentVersion, oprSeqFlag, addTime, addWho, editTime, editWho) VALUES('OJV_CML', 'SMG-SO', '03', 1, '00:00', '23:00', '', x'', '', '', '', '', '', 100, '20200624090611000173RA172031009087[A1010]', '2020-06-24 09:06:11', 'H334280', '2020-06-24 09:06:11', 'H334280');

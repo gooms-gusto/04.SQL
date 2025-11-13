@@ -1,0 +1,78 @@
+-- 
+-- Set character set the client will use to send SQL statements to the server
+--
+SET NAMES 'utf8';
+
+--
+-- Set default database
+--
+USE wms_cml;
+
+--
+-- Create view `ZCBT01_LTL_BROKEN_PALLET3`
+--
+CREATE
+DEFINER = 'sa'@'localhost'
+VIEW ZCBT01_LTL_BROKEN_PALLET3
+AS
+SELECT
+  `ZCBT01_LTL_BROKEN_PALLET2`.`customerId` AS `customerId`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`locationId` AS `locationId`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`WH` AS `WH`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`LOCLEVEL` AS `LOCLEVEL`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`sku` AS `sku`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`skuDescr1` AS `skuDescr1`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`sku_group1` AS `sku_group1`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`lotNum` AS `lotNum`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`traceId` AS `traceId`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`qty` AS `qty`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`qtycase` AS `qtycase`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`qtyAllocated` AS `qtyAllocated`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`qtyallocatedcase` AS `qtyallocatedcase`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`qtyavailable` AS `qtyavailable`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`UOM` AS `UOM`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`qtyavailablecase` AS `qtyavailablecase`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`UOMCASE` AS `UOMCASE`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`Status` AS `Status`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`packId` AS `packId`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`Batch` AS `Batch`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`Mandate` AS `Mandate`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`Expired` AS `Expired`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`FULLPALLET` AS `FULLPALLET`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`PP` AS `PP`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`LOC2` AS `LOC2`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`persen` AS `persen`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`CATEGORY` AS `CATEGORY`,
+  `ZCBT01_LTL_BROKEN_PALLET2`.`NOTES` AS `NOTES`
+FROM `wms_cml`.`ZCBT01_LTL_BROKEN_PALLET2`
+UNION ALL
+SELECT
+  `ZCBT01_LTL_BROKEN_PALLET1`.`customerId` AS `customerId`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`locationId` AS `locationId`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`WH` AS `WH`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`LOCLEVEL` AS `LOCLEVEL`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`sku` AS `sku`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`skuDescr1` AS `skuDescr1`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`sku_group1` AS `sku_group1`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`lotNum` AS `lotNum`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`traceId` AS `traceId`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`qty` AS `qty`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`qtycase` AS `qtycase`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`qtyAllocated` AS `qtyAllocated`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`qtyallocatedcase` AS `qtyallocatedcase`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`qtyavailable` AS `qtyavailable`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`UOM` AS `UOM`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`qtyavailablecase` AS `qtyavailablecase`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`UOMCASE` AS `UOMCASE`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`Status` AS `Status`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`packId` AS `packId`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`Batch` AS `Batch`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`Mandate` AS `Mandate`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`Expired` AS `Expired`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`FULLPALLET` AS `FULLPALLET`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`PP` AS `PP`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`LOC2` AS `LOC2`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`persen` AS `persen`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`CATEGORY` AS `CATEGORY`,
+  `ZCBT01_LTL_BROKEN_PALLET1`.`NOTES` AS `NOTES`
+FROM `wms_cml`.`ZCBT01_LTL_BROKEN_PALLET1`;

@@ -1,0 +1,30 @@
+﻿SELECT * FROM WMS_FTEST.DOC_ARRIVAL_DETAILS dad WHERE dad.arrivalno='AN211104001';
+
+SELECT * FROM WMS_FTEST.DOC_ARRIVAL_HEADER  dad WHERE dad.arrivalno='AN211104001';
+SELECT * FROM WMS_FTEST.DOC_APPOINTMENT_DETAILS dad WHERE dad.appointmentNo='INB210929005';
+
+SELECT * FROM DOC_ASN_HEADER dah WHERE dah.asnNo IN (SELECT dad.docNo FROM WMS_FTEST.DOC_APPOINTMENT_DETAILS dad WHERE dad.appointmentNo='INB210929005');
+
+  UPDATE WMS_FTEST.DOC_ARRIVAL_HEADER dah
+    SET dah.arrivalStatus='60'
+    WHERE dah.arrivalNo='AN210929007' AND dah.warehouseId='SMARTSBY01';
+
+    UPDATE WMS_FTEST.DOC_ASN_HEADER dah
+    SET dah.asnStatus='05'
+    WHERE dah.asnNo='ASN210929013' AND dah.warehouseId='SMARTSBY01';
+
+
+
+      SELECT
+             AR.arrivalno
+            FROM DOC_ARRIVAL_DETAILS AR
+              INNER JOIN DOC_APPOINTMENT_DETAILS AP
+                ON (AR.APPOINTMENTNO = AP.APPOINTMENTNO)
+              INNER JOIN DOC_LOADING_DETAILS LD
+                ON (AP.DOCNO = LD.LDLNO)
+              INNER JOIN DOC_ORDER_HEADER OD
+                ON (LD.ORDERNO = OD.ORDERNO)
+            WHERE   AR.arrivalno='AN211104001' AND AP.warehouseId='CBT01'
+
+
+ 

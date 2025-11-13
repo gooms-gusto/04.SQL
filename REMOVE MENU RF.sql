@@ -1,0 +1,12 @@
+﻿USE WMS_FTEST;
+
+SELECT * FROM SYS_DEV_RF_FORM sdrf WHERE sdrf.organizationId='OJV_CML' AND  sdrf.functionId='WRF_H5INV01001';
+
+SELECT * FROM SYS_DEV_RF_FORM_UDF sdrf WHERE sdrf.organizationId='OJV_CML' AND  sdrf.functionId='WRF_H5INV01001';
+
+DELETE FROM SYS_DEV_RF_FORM  
+WHERE organizationId='OJV_CML' AND  functionId='WRF_H5INV01001';
+
+DELETE FROM SYS_DEV_RF_FORM_UDF  
+WHERE organizationId='OJV_CML' AND  functionId='WRF_H5INV01001';
+

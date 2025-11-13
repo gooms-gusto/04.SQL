@@ -1,0 +1,13 @@
+SELECT doh.soReference1,doh.udf05,doh.udf06,dod.sku,
+CAST(IFNULL(dod.qtyOrdered_each,0) as string)  as qtyOrdered_each,
+CAST(IFNULL(dod.qtyShipped_each,0) as string) as qtyShipped_each,
+CAST(IFNULL(dod.qtyOrdered_each - dod.qtyShipped_each,0) as string) as pendingpick,
+dod.lotAtt04
+FROM linc-bi.wms_cml.DOC_ORDER_HEADER doh
+  INNER JOIN linc-bi.wms_cml.DOC_ORDER_DETAILS dod
+    ON doh.warehouseId = dod.warehouseId
+    AND doh.orderNo = dod.orderNo
+    AND doh.customerId = dod.customerId
+  WHERE doh.customerId='?'  
+and doh.soReference1 in (?)
+AND doh.soStatus='99' order by doh.orderNo ASC;

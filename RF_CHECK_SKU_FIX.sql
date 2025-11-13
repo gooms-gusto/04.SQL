@@ -1,0 +1,21 @@
+﻿SELECT  MIN(INV_LOT_ATT.lotAtt02)
+  FROM DOC_ASN_DETAILS INNER JOIN 
+  INV_LOT_LOC_ID ON (DOC_ASN_DETAILS.warehouseId=INV_LOT_LOC_ID.warehouseId
+  AND DOC_ASN_DETAILS.customerId= INV_LOT_LOC_ID.customerId
+  AND DOC_ASN_DETAILS.SKU=INV_LOT_LOC_ID.sku)
+  INNER JOIN  INV_LOT_ATT  ON (INV_LOT_LOC_ID.customerId=INV_LOT_ATT.customerId
+  AND INV_LOT_LOC_ID.sku=INV_LOT_ATT.sku AND INV_LOT_LOC_ID.lotNum=INV_LOT_ATT.lotNum)
+  WHERE DOC_ASN_DETAILS.asnNo='PPYASN2306070001' AND
+  DOC_ASN_DETAILS.SKU='050301988' AND
+      INV_LOT_LOC_ID.qty - INV_LOT_LOC_ID.qtyAllocated -(INV_LOT_LOC_ID.qtyOnHold + 0) - INV_LOT_LOC_ID.qtyRpOut - INV_LOT_LOC_ID.qtyMvOut        > 0    
+
+--                       OR (INV_LOT_LOC_ID.qtyRpIn > 0    
+--                       OR INV_LOT_LOC_ID.qtyMvIn > 0    
+--                       OR INV_LOT_LOC_ID.qtyPa   > 0)
+  -- (INV_LOT_LOC_ID.qty-INV_LOT_LOC_ID.qtyAllocated-INV_LOT_LOC_ID.qtyOnHold) > 0
+
+-- SELECT *
+--   FROM DOC_ASN_DETAILS WHERE asnno='PPYASN2306070001'
+-- --  DESC INV_LOT_ATT;
+
+--  SELECT * FROM INV_LOT_LOC_ID WHERE LOTNUM='0035069'

@@ -1,0 +1,1 @@
+﻿SELECT * FROM BAS_MANPOWER bm WHERE bm.CustomerID IN ('PPG','BCA','LTL') ORDER BY bm.AddTime DESC 

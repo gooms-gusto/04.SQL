@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<DbObjectNodesFilter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" match="All" using="0001-01-01T00:00:00">
+  <criterias>
+    <criteria property="Name" operator="Contains">
+      <value>NW</value>
+    </criteria>
+    <criteria property="Name" operator="Contains">
+      <value>Z_SP_ProcessBillingCML_</value>
+    </criteria>
+  </criterias>
+</DbObjectNodesFilter>

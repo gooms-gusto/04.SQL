@@ -1,0 +1,4 @@
+1. set billing setup as normally
+2. set standard rate as normally
+3. set system config 3PL_CUST, add detail with customer ID and set config value Yes
+4. update detail tarif udf 9 with system code id RAT_BASCUSTOM, chose SP name ex: BILHICBMSTD

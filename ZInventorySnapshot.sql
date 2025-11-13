@@ -1,0 +1,1 @@
+SELECT * FROM Z_InventoryBalance zib WHERE zib.warehouseId='SMARTSBY01' AND zib.customerId='SMARTSBY01'

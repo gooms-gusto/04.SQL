@@ -1,0 +1,229 @@
+-- 
+-- Set character set the client will use to send SQL statements to the server
+--
+SET NAMES 'utf8';
+
+--
+-- Set default database
+--
+USE wms_cml;
+
+--
+-- Create table `TSK_TASKLISTS`
+--
+CREATE TABLE TSK_TASKLISTS (
+  organizationId varchar(20) binary NOT NULL,
+  warehouseId varchar(20) binary NOT NULL,
+  taskId varchar(20) binary NOT NULL,
+  taskId_Sequence int(11) NOT NULL,
+  taskType varchar(20) binary NOT NULL,
+  taskProcess varchar(20) binary NOT NULL,
+  taskProcessMsg varchar(100) binary NOT NULL,
+  priority varchar(20) binary NOT NULL,
+  customerId varchar(30) binary NOT NULL,
+  sku varchar(50) binary NOT NULL,
+  docType varchar(20) binary DEFAULT NULL,
+  docNo varchar(20) binary DEFAULT NULL,
+  docLineNo int(11) DEFAULT NULL,
+  fmLotNum varchar(10) binary NOT NULL,
+  fmPackId varchar(50) binary DEFAULT NULL,
+  fmUom varchar(10) binary NOT NULL,
+  fmQty decimal(18, 8) DEFAULT 0.00000000,
+  fmQty_Each decimal(18, 8) DEFAULT 0.00000000,
+  fmLocation varchar(60) binary DEFAULT NULL,
+  logicalFmSequence varchar(60) binary DEFAULT NULL,
+  fmId varchar(30) binary DEFAULT NULL,
+  planToLotNum varchar(10) binary DEFAULT NULL,
+  planToPackId varchar(50) binary DEFAULT NULL,
+  planToUom varchar(10) binary DEFAULT NULL,
+  planToQty decimal(18, 8) DEFAULT 0.00000000,
+  planToQty_Each decimal(18, 8) DEFAULT 0.00000000,
+  planToLocation varchar(60) binary DEFAULT NULL,
+  PlanLogicalToSequence varchar(60) binary DEFAULT NULL,
+  planToId varchar(30) binary DEFAULT NULL,
+  reasonCode varchar(20) binary DEFAULT NULL,
+  reason varchar(100) binary DEFAULT NULL,
+  lotatt01 varchar(20) binary DEFAULT NULL,
+  lotatt02 varchar(20) binary DEFAULT NULL,
+  lotatt03 varchar(20) binary DEFAULT NULL,
+  lotAtt04 varchar(100) binary DEFAULT NULL,
+  lotAtt05 varchar(100) binary DEFAULT NULL,
+  lotAtt06 varchar(100) binary DEFAULT NULL,
+  lotAtt07 varchar(100) binary DEFAULT NULL,
+  lotAtt08 varchar(100) binary DEFAULT NULL,
+  lotAtt09 varchar(100) binary DEFAULT NULL,
+  lotAtt10 varchar(100) binary DEFAULT NULL,
+  lotAtt11 varchar(100) binary DEFAULT NULL,
+  lotAtt12 varchar(100) binary DEFAULT NULL,
+  lotAtt13 varchar(100) binary DEFAULT NULL,
+  lotAtt14 varchar(100) binary DEFAULT NULL,
+  lotAtt15 varchar(100) binary DEFAULT NULL,
+  lotAtt16 varchar(100) binary DEFAULT NULL,
+  lotAtt17 varchar(100) binary DEFAULT NULL,
+  lotAtt18 varchar(100) binary DEFAULT NULL,
+  lotAtt19 varchar(100) binary DEFAULT NULL,
+  lotAtt20 varchar(100) binary DEFAULT NULL,
+  lotAtt21 varchar(100) binary DEFAULT NULL,
+  lotAtt22 varchar(100) binary DEFAULT NULL,
+  lotAtt23 varchar(100) binary DEFAULT NULL,
+  lotAtt24 varchar(100) binary DEFAULT NULL,
+  totalCubic decimal(18, 8) NOT NULL DEFAULT 0.00000000,
+  totalGrossWeight decimal(18, 8) NOT NULL DEFAULT 0.00000000,
+  totalNetWeight decimal(18, 8) NOT NULL DEFAULT 0.00000000,
+  totalPrice decimal(24, 8) NOT NULL DEFAULT 0.00000000,
+  create_TransactionId varchar(20) binary DEFAULT NULL,
+  completed_TransactionId varchar(20) binary DEFAULT NULL,
+  releaseTaskId varchar(20) binary DEFAULT NULL,
+  allocationDetailsId varchar(20) binary DEFAULT NULL,
+  openWho varchar(40) binary DEFAULT NULL,
+  openTime timestamp NULL DEFAULT NULL,
+  holdWho varchar(40) binary DEFAULT NULL,
+  holdTime timestamp NULL DEFAULT NULL,
+  closeWho varchar(40) binary DEFAULT NULL,
+  closeTime timestamp NULL DEFAULT NULL,
+  printFlag char(1) binary DEFAULT 'N',
+  rfGetTask char(1) binary DEFAULT 'N',
+  ediSendTime timestamp NULL DEFAULT NULL,
+  groupTaskId varchar(20) binary DEFAULT NULL,
+  groupTaskSequence int(11) DEFAULT NULL,
+  wcsFlag char(1) binary DEFAULT NULL,
+  workStation varchar(20) binary DEFAULT NULL,
+  udfPrintFlag1 char(1) binary DEFAULT 'N',
+  doubleConfirmBy varchar(20) binary DEFAULT NULL,
+  doubleConfirmtime timestamp NULL DEFAULT NULL,
+  noteText mediumtext binary DEFAULT NULL,
+  udf01 varchar(500) binary DEFAULT NULL,
+  udf02 varchar(500) binary DEFAULT NULL,
+  udf03 varchar(500) binary DEFAULT NULL,
+  udf04 varchar(500) binary DEFAULT NULL,
+  udf05 varchar(500) binary DEFAULT NULL,
+  currentVersion int(11) NOT NULL DEFAULT 100,
+  oprSeqFlag varchar(65) binary NOT NULL DEFAULT '2016',
+  addWho varchar(40) binary DEFAULT NULL,
+  addTime timestamp NULL DEFAULT NULL,
+  editWho varchar(40) binary DEFAULT NULL,
+  editTime timestamp NULL DEFAULT NULL,
+  cartonId varchar(50) binary DEFAULT NULL,
+  cartonGroup varchar(10) binary DEFAULT NULL,
+  fmMuid varchar(30) binary DEFAULT NULL,
+  planToMuid varchar(30) binary DEFAULT NULL,
+  PRIMARY KEY (organizationId, warehouseId, taskId, taskId_Sequence)
+)
+ENGINE = INNODB,
+AVG_ROW_LENGTH = 711,
+CHARACTER SET utf8,
+COLLATE utf8_bin;
+
+--
+-- Create index `auto_shard_key_organizationId` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX auto_shard_key_organizationId (organizationId);
+
+--
+-- Create index `I_TSK_TASKLISTS` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS (organizationId, warehouseId, taskProcess, holdTime);
+
+--
+-- Create index `I_TSK_TASKLISTS_2` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_2 (organizationId, warehouseId, create_TransactionId);
+
+--
+-- Create index `I_TSK_TASKLISTS_A` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_A (organizationId, warehouseId, taskProcess);
+
+--
+-- Create index `I_TSK_TASKLISTS_A1` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_A1 (organizationId, warehouseId, taskProcess, taskType);
+
+--
+-- Create index `I_TSK_TASKLISTS_ADDTIME` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_ADDTIME (addTime);
+
+--
+-- Create index `I_TSK_TASKLISTS_C` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_C (organizationId, warehouseId, completed_TransactionId);
+
+--
+-- Create index `I_TSK_TASKLISTS_D` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_D (organizationId, warehouseId, groupTaskId);
+
+--
+-- Create index `I_TSK_TASKLISTS_OPENTIME` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_OPENTIME (organizationId, warehouseId, openTime, sku, customerId, taskProcess, taskType);
+
+--
+-- Create index `I_TSK_TASKLISTS_OWC` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_OWC (organizationId, warehouseId, create_TransactionId);
+
+--
+-- Create index `I_TSK_TASKLISTS_OWTH` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_OWTH (organizationId, warehouseId, taskProcess, holdTime);
+
+--
+-- Create index `I_TSK_TASKLISTS_PlanToID` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_PlanToID (organizationId, warehouseId, taskType, planToId);
+
+--
+-- Create index `I_TSK_TASKLISTS_TPTF` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX I_TSK_TASKLISTS_TPTF (organizationId, warehouseId, taskType, planToLocation, taskProcess, fmMuid);
+
+--
+-- Create index `IDX_TSK_TASKLISTS_ALLOCATEID` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX IDX_TSK_TASKLISTS_ALLOCATEID (organizationId, warehouseId, taskId, allocationDetailsId);
+
+--
+-- Create index `IDX_TSK_TASKLISTS_BYALLOCATION` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX IDX_TSK_TASKLISTS_BYALLOCATION (organizationId, warehouseId, allocationDetailsId);
+
+--
+-- Create index `IDX_TSK_TASKLISTS_BYDOCNO` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX IDX_TSK_TASKLISTS_BYDOCNO (organizationId, warehouseId, docNo);
+
+--
+-- Create index `IDX_TSK_TASKLISTS_BYFMID` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX IDX_TSK_TASKLISTS_BYFMID (organizationId, warehouseId, fmId, taskType);
+
+--
+-- Create index `IDX_TSK_TASKLISTS_BYTASKTYPE` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX IDX_TSK_TASKLISTS_BYTASKTYPE (organizationId, warehouseId, taskType, closeTime, taskProcess);
+
+--
+-- Create index `IDX_TSK_TASKLISTS_PACK` on table `TSK_TASKLISTS`
+--
+ALTER TABLE TSK_TASKLISTS
+ADD INDEX IDX_TSK_TASKLISTS_PACK (organizationId, customerId, fmPackId, planToPackId);

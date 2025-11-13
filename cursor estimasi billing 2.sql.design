@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Devart (www.devart.com), SQL document design file -->
+<!-- Modifying this generated file will probably render it invalid -->
+<Document>
+  <Properties>
+    <Type>SQL Document Design</Type>
+    <DatabaseProvider>59f90733-4d68-4fdf-82a7-f0fcbf5460aa</DatabaseProvider>
+    <ProviderVersion>9.1.21.0</ProviderVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </Properties>
+  <Connection>
+    <ConnectionModel>
+      <PropertyValue Name="Database">59f90733-4d68-4fdf-82a7-f0fcbf5460aa</PropertyValue>
+      <PropertyValue Name="ConnectionString" xml:space="preserve">User Id=akbar;Host=34.128.68.183;Protocol=Ssl;Character Set=utf8;SSL Cipher List="DES(40): DES(56): 3DES(168): AES(128): AES(256): RC4(40): RC4(128): RC2(40)";SSL CA Cert="file://D:\OneDriveLinc\OneDrive - CIPTA MAPAN LOGISTIK PT\03.VPN\Credential Billing\baru\server-ca (1).pem";SSL Cert="file://D:\OneDriveLinc\OneDrive - CIPTA MAPAN LOGISTIK PT\03.VPN\Credential Billing\baru\client-cert (1).pem";SSL Key="file://D:\OneDriveLinc\OneDrive - CIPTA MAPAN LOGISTIK PT\03.VPN\Credential Billing\baru\client-key.pem";SSL TLS Protocol=1.2</PropertyValue>
+      <PropertyValue Name="ExecutionTimeout">0</PropertyValue>
+    </ConnectionModel>
+    <Database>prod_apibilling</Database>
+  </Connection>
+  <Views ShowAdditionalViews="False" IsLayoutActiveAttribute="True" MainViewAttribute="Code" MainViewScale="59">
+    <View Name="Design" Visible="False" />
+    <View Name="Code" Active="True" Visible="True">
+      <Data />
+    </View>
+    <View Name="Data" Visible="True" />
+    <View Name="Profiler" Visible="False" />
+    <View Name="PivotGrid" Visible="False" />
+  </Views>
+</Document>

@@ -1,0 +1,8 @@
+SELECT doh.asnNo,doh.asnReference1,dod.sku,CAST(IFNULL(dod.receivedQty_each,0) as string)  as receivedQty_each,dod.udf05,doh.asnNo,doh.noteText,dod.lotAtt04
+		FROM linc-bi.wms_cml.DOC_ASN_HEADER doh
+        INNER JOIN linc-bi.wms_cml.DOC_ASN_DETAILS dod
+        ON doh.warehouseId = dod.warehouseId
+        AND doh.asnNo = dod.asnNo
+        AND doh.customerId = dod.customerId
+        INNER JOIN linc-bi.wms_cml.DOC_PO_HEADER po on (po.customerId=doh.customerId and po.poNo=doh.poNo)
+        WHERE doh.customerId='$customerId' AND doh.warehouseId='$warehouseId' AND doh.asnStatus='99' and doh.asnReference1='$model->asn_no'

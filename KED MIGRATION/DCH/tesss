@@ -1,0 +1,8 @@
+﻿select a.organizationId,a.warehouseId,a.asnNo,b.docNo,b.appointmentNo
+from wms_cml.DOC_ASN_HEADER a left outer join 
+  wms_cml.DOC_APPOINTMENT_DETAILS b on a.organizationId=b.organizationId 
+  and a.warehouseId=b.warehouseId and a.asnNo=b.docNo
+where a.warehouseId='BASF02' and a.addtime>='2021-09-24' and a.addtime<'2021-09-25'
+
+
+  SELECT * FROM  wms_cml.DOC_APPOINTMENT_DETAILS WHERE warehouseId='BASF02' and PONO='ASN0002088'

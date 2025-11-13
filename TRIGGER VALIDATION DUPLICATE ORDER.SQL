@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` TRIGGER TRG_CHECK_DUPLICATE_SO_REF01
+BEFORE INSERT ON DOC_ORDER_HEADER
+FOR EACH ROW FOLLOWS TRG_GENERATE_CARTONGROUP
+BEGIN
+    DECLARE duplicate INT;
+    SELECT COUNT(*) INTO duplicate FROM DOC_ORDER_HEADER  WHERE soReference1 = NEW.soReference1 AND customerId=NEW.customerId AND NEW.warehouseId=NEW.warehouseId;
+    IF duplicate > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Duplicate insert key soReference1';
+    END IF;
+END

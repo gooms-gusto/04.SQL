@@ -1,0 +1,21 @@
+﻿SELECT * FROM Z_SP_BILLING_LOG zsbl ORDER BY zsbl.addTime DESC LIMIT 10;
+
+SELECT * FROM BIL_SUMMARY bs WHERE bs.organizationId='OJV_CML' AND bs.customerId='LTL' AND bs.warehouseId='CBT01'
+AND bs.docNo='P000018601';
+
+
+SHOW PROCESSLIST;
+
+-- Check current settings
+SHOW VARIABLES LIKE '%buffer%';
+SHOW VARIABLES LIKE '%cache%';
+
+SHOW FULL PROCESSLIST;
+
+SELECT CONNECTION_ID();
+RESET QUERY CACHE;
+
+SHOW STATUS LIKE '%memory%';
+
+SHOW STATUS LIKE '%memory%';
+SHOW VARIABLES LIKE '%buffer%';
