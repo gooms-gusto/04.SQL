@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<DbObjectNodesFilter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" match="Any" using="0001-01-01T00:00:00">
+  <criterias>
+    <criteria property="Name" operator="Contains">
+      <value>CML_COUNT_RENT_PALLET_DAYS</value>
+    </criteria>
+    <criteria property="Name" operator="Contains">
+      <value>CML_COUNT_STORAGE_DAYS</value>
+    </criteria>
+  </criterias>
+</DbObjectNodesFilter>
